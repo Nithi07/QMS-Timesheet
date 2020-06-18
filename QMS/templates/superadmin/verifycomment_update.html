@@ -1,0 +1,63 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+
+<style>
+div {
+  padding: 30px;
+  border: 1px ;
+}
+</style>
+
+<div>
+    <center>
+      <h2>Auditor Comment</h2>
+<form method="post" action="." >
+
+    {% csrf_token %}
+        <table style="table table-bordered table-striped; width:100%">
+            <tbody>
+        <tr>
+            <th>ISO Ref no</th>
+            <th>Activity Title</th>
+            <th>Evidence (By Auditor)</th>
+            <th>Corrective Action(By Auditee)</th>
+            <th>Verified Reason (By Auditor)</th>
+            <th>Status</th>
+        </tr>
+        <tr>
+            <td>{{auditcomments.cls_refno}}</td>
+            <td>{{auditcomments.description}}</td>
+            <td>{{auditcomments.auditor_comments}}</td>
+            <td>{{auditcomments.auditee_comments}}</td>
+            <td><input type="text" name="verified_comments" value="{{auditcomments.verified_comments}}"></td>
+
+            <td><select  name="verified_status" id="Default">
+              <option value="Yet-verify">Yet-verify</option>
+              <option value="Re-submit">Re-submit</option>
+              <option value="Verified">Verified</option>
+            </select></td>
+
+            <script type="text/javascript">
+              $(function() {
+                  var tempe="{{auditcomments.verified_status}}";
+                  $("#Default").val(tempe);
+              });
+
+            </script>
+        </tr>
+      </tbody>
+   </table>
+
+
+
+<div style="text-align:center">
+  <button type="submit" class="btn btn-success">Submit</button>
+</div>
+
+</form>
+
+    </center>
+</div>
+
+{% endblock %}

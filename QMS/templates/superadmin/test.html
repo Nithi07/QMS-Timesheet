@@ -1,0 +1,109 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link href="{% static 'css/bootstrap.min.css' %} rel="stylesheet" id="bootstrap-css">
+<table style="table table-bordered table-striped; width:100%"  class=" table order-list">
+    <tbody>
+<tr>
+    <th>ISO Ref no</th>
+    <th>Activity Title</th>
+    <th>Evidence (By Auditor)</th>
+    <th>Status</th>
+    <th>Department</th>
+</tr>
+{%for wkm in workmanual%}
+    <tr>
+            <td>{{wkm.cls_ref_no}}</td>
+            <td>{{wkm.activity_title}}</td>
+            <td>{{form.auditor_comments}}</td>
+            <td><select  name="auditor_status" required>
+              <option value="Completed">C</option>
+              <option value="OFI">OFI</option>
+              <option value="No change">NC</option>
+            </select></td>
+            <td><select  name="department" required>
+              <option value="">Select</option>
+              <option value="Civil">CL</option>
+              <option value="Mechanical">MECH</option>
+              <option value="Electrical">ELC</option>
+              <option value="TL">TL</option>
+            </select></td>
+            <input type="hidden" name="audittype" value="{{auditschedule.schedule_auditype.audittype}}">
+            <input type="hidden" name="cls_refno" value="{{wkm.cls_ref_no}}">
+            <input type="hidden" name="description" value="{{wkm.activity_title}}">
+            <input type="hidden" name="auditschedule_id" value="{{auditschedule.id}}">
+            <input type="hidden" name="workmanual_id" value="{{wkm.id}}">
+            <td class="col-sm-2"><a class="deleteRow"></a>
+
+            </td>
+    </tr>
+ {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="5" style="text-align: left;">
+                <input type="button" class="btn btn-lg btn-block " id="addrow" value="Add Row" />
+            </td>
+        </tr>
+        <tr>
+        </tr>
+    </tfoot>
+ </table>
+
+
+
+<script type="text/javascript" src="{% static 'js/min.js' %}">
+</script>
+
+<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}">
+</script>
+
+<script type="text/javascript">
+
+         $(document).ready(function () {
+           var counter = 0;
+
+           $("#addrow").on("click", function () {
+               var newRow = $("<tr>");
+               var cols = "";
+
+               cols += '<td><input type="text" class="form-control" name="name' + counter + '"/></td>';
+               cols += '<td><input type="text" class="form-control" name="mail' + counter + '"/></td>';
+               cols += '<td><input type="text" class="form-control" name="phone' + counter + '"/></td>';
+
+               cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
+               newRow.append(cols);
+               $("table.order-list").append(newRow);
+               counter++;
+           });
+
+
+
+           $("table.order-list").on("click", ".ibtnDel", function (event) {
+               $(this).closest("tr").remove();
+               counter -= 1
+           });
+
+
+       });
+
+
+
+       function calculateRow(row) {
+           var price = +row.find('input[name^="price"]').val();
+
+       }
+
+       function calculateGrandTotal() {
+           var grandTotal = 0;
+           $("table.order-list").find('input[name^="price"]').each(function () {
+               grandTotal += +$(this).val();
+           });
+           $("#grandtotal").text(grandTotal.toFixed(2));
+       }
+
+ </script>
+</div>
+{%endblock%}

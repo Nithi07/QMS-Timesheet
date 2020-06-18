@@ -1,0 +1,94 @@
+{% extends 'common/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+
+  <style>
+    div.left{
+      position: absolute;
+      left:157px;
+    }
+    div.pad2 {
+      padding-left: 105px;
+    }
+    div.pad1 {
+      padding-left: 30px;
+      padding-top: 30px;
+    }
+    div.pad3{
+      padding-top: 30px;
+    }
+    div.pad4{
+      padding-top: 30px;
+      padding-left: 18px;
+    }
+  </style>
+
+
+  <form method="post" action=".">
+
+      {% csrf_token %}
+
+      <center><h3>Audit Schedule</h3>  </center>
+
+        <div class="pad1">
+          {{form.schedule_auditype|as_crispy_field}}
+        </div>
+
+        <div class="container d-flex h-100 dropdown pad3" >
+          <div class="col-form-label col-lg-2">
+            <b>Auditor List:</b>  </div><button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Select
+                </button>
+                <div class=" dropdown-menu left">
+                      <a href="#" >{{ form.schedule_auditor_list}}</a>
+                    </div>
+          </div>
+
+          <div class="container d-flex h-100 dropdown pad3" >
+            <div class="col-form-label col-lg-2">
+              <b>Auditee List:</b>  </div><button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Select
+                  </button>
+                  <div class=" dropdown-menu left">
+                        <a href="#" >{{ form.schedule_auditee_list}}</a>
+                  </div>
+          </div>
+
+          <div class="pad1">
+            {{form.schedule_job_code|as_crispy_field}}
+          </div>
+
+          <div class="pad1">
+            {{form.schedule_sub_job_code|as_crispy_field}}
+          </div>
+
+          <div class="pad1">
+            {{form.schedule_audit_date|as_crispy_field}}
+          </div>
+
+          <div class="pad1">
+            {{form.schedule_audit_time|as_crispy_field}}
+          </div>
+
+          <div class="pad1">
+            {{form.schedule_iso_year|as_crispy_field}}
+          </div>
+
+          <div class="container d-flex h-100 dropup pad3" >
+            <div class="col-form-label col-lg-2">
+              <b>Final Auditor List:</b>  </div><button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Select
+                  </button>
+                  <div class=" dropdown-menu left">
+                        <a href="#" >{{ form.schedule_final_auditor_list}}</a>
+                      </div>
+            </div>
+
+            <center>
+              <div class="pad3">
+                <input type="reset"  value="Reset" class="btn btn-success">
+                <input type="submit" name="Submit" class="btn btn-success">
+                <a href="{% url 'QMS:auditscheduleview' %}" class="btn btn-success">Back<span class="glyphicon glyphicon-step-backward"></span></a>
+              </div>
+            </center>
+    </form>
+
+{% endblock %}

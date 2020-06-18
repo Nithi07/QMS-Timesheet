@@ -1,0 +1,79 @@
+{% extends 'common/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+<style>
+div {
+  padding: 30px;
+  border: 1px ;
+}
+</style>
+
+<div>
+    <center>
+      <h2>Auditor Comment</h2>
+<form method="post" action="." >
+
+    {% csrf_token %}
+
+                      <table style="table table-bordered table-striped; width:100%">
+                          <tbody>
+                      <tr>
+                          <th>Audit Type</th>
+                          <th>ISO Ref no</th>
+                          <th>Activity Title</th>
+                          <th>Evidence (By Auditor)</th>
+                          <th>Status</th>
+                          <th>Department</th>
+
+                      </tr>
+                            <tr>
+                              <input type="hidden" name="auditschedule_id" value="{{auditorcomments.auditschedule_id}}">
+                              <input type="hidden" name="workmanual_id" value="{{auditorcomments.workmanual_id}}">
+                              <td><input type="text" name="audittype" value="{{auditorcomments.audittype}}" readonly></td>
+                              <td><input type="text" name="cls_refno" value="{{auditorcomments.cls_refno}}" readonly></td>
+                              <td><input type="text" name="description" value="{{auditorcomments.description}}" readonly></td>
+                              <td><input type="text" name="auditor_comments" value="{{auditorcomments.auditor_comments}}"></td>
+                              <td><select  name="auditor_status" id="MySelect">
+                                <option value="Completed">C</option>
+                                <option value="OFI">OFI</option>
+                                <option value="No change">NC</option>
+                              </select></td>
+                              <script type="text/javascript">
+                                $(function() {
+                                    var temp="{{auditorcomments.auditor_status}}";
+                                    $("#MySelect").val(temp);
+                                });
+                              </script>
+
+                              <td><select  name="department" id="Default" >
+                                <option value="">Select</option>
+                                <option value="Civil">CL</option>
+                                <option value="Mechanical">MECH</option>
+                                <option value="Electrical">ELC</option>
+                                <option value="TL">TL</option>
+
+                              </select></td>
+                              <script type="text/javascript">
+                                $(function() {
+                                    var tempe="{{auditorcomments.department}}";
+                                    $("#Default").val(tempe);
+                                });
+                              </script>
+                            </tr>
+                          </tbody>
+                       </table>
+
+<div style="text-align:center">
+  <button type="submit" class="btn btn-success">Submit</button>
+</div>
+
+</form>
+
+    </center>
+</div>
+
+{% endblock %}
